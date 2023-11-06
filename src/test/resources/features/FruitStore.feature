@@ -1,6 +1,6 @@
 Feature: POJO test for Fruit API
 
-  @post @api
+  @api
   Scenario: POJO test
 
     When Create a POJO utility file to store response then use TestNG soft and hard assertion
