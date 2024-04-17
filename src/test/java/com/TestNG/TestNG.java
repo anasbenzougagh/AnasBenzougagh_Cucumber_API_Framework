@@ -1,4 +1,4 @@
-package com.runner;
+package com.TestNG;
 
 import com.utilities.ConfigurationReader;
 import io.restassured.RestAssured;
