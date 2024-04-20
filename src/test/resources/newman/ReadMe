@@ -1,0 +1,8 @@
+1. Locate file directory:
+2. Run
+    i. run collection in CLI
+    >_  newman run FruitShopCRUD.json
+    ii. run collection and extract report
+    >_  newman run categories.json -r htmlextra
+    iii. run in CLI and extract report
+    >_  newman run categories.json -r htmlextra,cli

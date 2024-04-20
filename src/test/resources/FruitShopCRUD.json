@@ -1,0 +1,452 @@
+{
+	"info": {
+		"_postman_id": "507d3828-4350-401c-8fc6-d70e66030e63",
+		"name": "Fruit Shop CRUD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29054613"
+	},
+	"item": [
+		{
+			"name": "Post request",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//get response in json formate\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"//set a golbal id variable as it will chamge with each added request\r",
+							"var id = pm.globals.set(\"id\", jsonData.id);\r",
+							"\r",
+							"var currentId = jsonData.id;\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Fruit name is Dragon Fruit\", function () {\r",
+							"\r",
+							"    pm.expect(jsonData.name).equal('Dragon Fruit');\r",
+							"    pm.expect(jsonData.price).equal(9.79);\r",
+							"    pm.expect(jsonData.self_link).eq('/shop/v2/products/'+currentId);\r",
+							"\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Dragon Fruit\",\r\n  \"price\": 9.79\r\n}"
+				},
+				"url": {
+					"raw": "{{furitShop}}/products",
+					"host": [
+						"{{furitShop}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get posted request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"var response = pm.response.json();",
+							"",
+							"var id = pm.environment.get(\"id\");",
+							"",
+							"pm.test(\"Fruit name is Dragon Fruit\", function () {",
+							"",
+							"    pm.expect(response.name).equal('Dragon Fruit');",
+							"",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{furitShop}}/products/:id",
+					"host": [
+						"{{furitShop}}"
+					],
+					"path": [
+						"products",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update posted request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//get response in json formate\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"//set a golbal id variable as it will chamge with each added request\r",
+							"var id = pm.globals.set(\"id\", jsonData.id);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Fruit name is Updated\", function () {\r",
+							"    pm.expect(jsonData.name).equal('Updated Dragon Fruit');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Updated Dragon Fruit\",\r\n  \"price\": 19.79\r\n}"
+				},
+				"url": {
+					"raw": "{{furitShop}}/products/:id",
+					"host": [
+						"{{furitShop}}"
+					],
+					"path": [
+						"products",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get updated request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"var response = pm.response.json();\r",
+							"\r",
+							"var id = pm.environment.get(\"id\");\r",
+							"\r",
+							"pm.test(\"Fruit name is Dragon Fruit\", function () {\r",
+							"\r",
+							"    pm.expect(response.name).equal('Updated Dragon Fruit');\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{furitShop}}/products/:id",
+					"host": [
+						"{{furitShop}}"
+					],
+					"path": [
+						"products",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch updated request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//get response in json formate\r",
+							"var jsonData = pm.response.json();\r",
+							"//set a golbal id variable as it will chamge with each added request\r",
+							"var id = pm.globals.set(\"id\", jsonData.id);\r",
+							"\r",
+							"//get response in json formate\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"//set a golbal id variable as it will chamge with each added request\r",
+							"var id = pm.globals.set(\"id\", jsonData.id);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Fruit name is Updated\", function () {\r",
+							"    pm.expect(jsonData.name).equal('Patched Dragon Fruit');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Patched Dragon Fruit\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{furitShop}}/products/:id",
+					"host": [
+						"{{furitShop}}"
+					],
+					"path": [
+						"products",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get patched request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"var response = pm.response.json();\r",
+							"\r",
+							"var id = pm.environment.get(\"id\");\r",
+							"\r",
+							"pm.test(\"Fruit name is Patched\", function () {\r",
+							"\r",
+							"    pm.expect(response.name).equal('Patched Dragon Fruit');\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{furitShop}}/products/:id",
+					"host": [
+						"{{furitShop}}"
+					],
+					"path": [
+						"products",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete patched request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Fruit name is Dragon Fruit\", function () {\r",
+							"\r",
+							"    pm.expect(response.success).equal('Deleted');\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{furitShop}}/products/:id",
+					"host": [
+						"{{furitShop}}"
+					],
+					"path": [
+						"products",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get deleted request expected 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"var response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Fruit name is Dragon Fruit\", function () {\r",
+							"\r",
+							"    pm.expect(response.error).equal('Not Found');\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{furitShop}}/products/:id",
+					"host": [
+						"{{furitShop}}"
+					],
+					"path": [
+						"products",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "furitShop",
+			"value": "https://api.predic8.de/shop/v2"
+		}
+	]
+}
